@@ -18,4 +18,6 @@ void led_g_off(void);
 void led(state);
 void delay(int n);
 
+void led_g_toggle(void);
+
 #endif

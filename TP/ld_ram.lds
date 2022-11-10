@@ -5,6 +5,10 @@ MEMORY {
 }
 
 SECTIONS {
+    .IRQ : {
+        *(.IRQ)
+    } > sram1
+
     .text : {
         *(.text)
     } > sram1
