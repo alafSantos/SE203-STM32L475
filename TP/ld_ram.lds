@@ -7,19 +7,21 @@ MEMORY {
 SECTIONS {
     .IRQ : {
         *(.IRQ)
-    } > sram1
+    } > flash
 
     .text : {
         *(.text)
-    } > sram1
+    } > flash
+
+    .data : {
+        _dstart = .;
+        *(.data)
+        _dend = .;
+    } > sram1 AT>flash
 
     .rodata : {
         *(.rodata)
-    } > sram1
-    
-    .data : {
-        *(.data)
-    } > sram1
+    } > flash
     
     .bss : {
         _bstart = .;
@@ -29,4 +31,9 @@ SECTIONS {
 }
 
 _stackStart = ORIGIN(sram2) + LENGTH(sram2);
+
+/* renvoie la LMA d'une section (debut) */
+dataAddr_LMA = LOADADDR(.data);
+
 ENTRY(_start)
+

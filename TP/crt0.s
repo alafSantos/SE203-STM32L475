@@ -4,8 +4,10 @@
 .thumb
 .global _start
 
+.thumb_func
 _start:
     ldr sp, =_stackStart /* initialiser le pointeur pile, 0x10008000 32K (0x8000) */
+    bl init_data /* data : LMA to VMA */
     bl init_bss /* Création et initialisation à 0 de la bss en C */
     bl main /* main en C */
 
