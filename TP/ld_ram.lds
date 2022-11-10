@@ -24,6 +24,5 @@ SECTIONS {
     } > sram1
 }
 
-ENTRY(_start)
-
 _stackStart = ORIGIN(sram2) + LENGTH(sram2);
+ENTRY(_start)

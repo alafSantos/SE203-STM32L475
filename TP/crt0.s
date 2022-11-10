@@ -9,5 +9,6 @@ _start:
     bl init_bss /* Création et initialisation à 0 de la bss en C */
     bl main /* main en C */
 
-_exit: b _exit
+_exit:
+    b _exit
     

@@ -14,3 +14,18 @@ PUSH problème :
     qu'est censé faire cette instruction ?
     quel est l'état du processeur avant son exécution ?
     ce qu'il faut pour corriger ? est-ce faisable dans votre programme en C ?
+
+Pour activer le port série virtuel de votre carte, tapez les commandes suivantes une fois pour toutes :
+JLinkExe -device STM32L475VG -if SWD -autoconnect 1 -speed auto
+...
+Cortex-M4 identified.
+J-Link>vcom enable
+...
+J-Link>exit
+
+--------------------------------
+tio --list-devices
+tio /dev/serial/by-id/usb-SEGGER_J-Link_000770868477-if00
+
+----------------------------------------
+pour la partie checksum "display/x sum" sur interface debug après avoir envoyé les octes.

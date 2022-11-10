@@ -5,4 +5,4 @@
 Les exercices donnés pendant les cours se trouvent dans le dossier **exercices** et les explications et les réponses finales pour chacun se trouvent dans le fichier **README.md**
 
 ## TP
-Le TP est encore en développement dans d'autres branches.
+Le TP est dans le dossier **TP**

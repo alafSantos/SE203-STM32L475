@@ -1,7 +1,7 @@
 #ifndef LED_H
 #define LED_H
 
-#include<stdint.h>
+#include "stm32l475xx.h"
 #define TIME 100000
 
 typedef enum
@@ -12,15 +12,10 @@ typedef enum
     LED_BLUE
 } state;
 
-void clock_disable(void);
-void clock_enable(void);
-
 void led_init(void);
-
 void led_g_on(void);
 void led_g_off(void);
 void led(state);
-
 void delay(int n);
 
 #endif

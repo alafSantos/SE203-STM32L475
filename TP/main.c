@@ -1,21 +1,13 @@
 #include "led.h"
+#include "clocks.h"
+#include "uart.h"
 
 int main(){
-  led_init();
-
-  while (1){
-    led(LED_OFF);
-    led(LED_GREEN);
-    delay(2*TIME);
-
-    led(LED_OFF);
-    led(LED_YELLOW);
-    delay(2*TIME);
-
-    led(LED_OFF);
-    led(LED_BLUE);
-    delay(2*TIME);
-  }
+  clocks_init();
+  uart_init();
   
+  // checksum();
+  uart_echo();
+ 
   return 0;
 }

@@ -4,19 +4,26 @@ AS    = $(PREFIX)as
 LD    = $(PREFIX)ld
 GDB   = $(PREFIX)gdb
 
-CFLAGS  = -c -g -O1 -Wall -Werror -Wextra -ffreestanding
-TARGET_ARCH = -mcpu=cortex-m4 -mthumb
+FPU = -mfloat-abi=hard -mfpu=fpv4-sp-d16
+TARGET_ARCH = -mcpu=cortex-m4 -mthumb $(FPU)
+CLK = clocks.o
 LDFLAGS = -T ld_ram.lds -nostdlib
 ASFLAGS = -g
 DUMPFLAGS = -d
 EXE  = main
-OBJS = main.o crt0.o init.o memfuncs.o led.o
+OBJS = main.o crt0.o init.o memfuncs.o led.o uart.o
+
+CMSISDIR1 = CMSIS/Device/ST/STM32L4xx/Include
+CMSISDIR2 = CMSIS/Include
+INCLUDEPATH = $(CMSISDIR1) $(CMSISDIR2)
+WARNINGS = -Wall -Werror -Wextra
+CFLAGS  = -c -g -O1 -ffreestanding $(WARNINGS)  $(addprefix -I ,${INCLUDEPATH}) 
 
 .PHONY: connect debug clean all
 
 all: $(EXE)
 
-$(EXE):$(OBJS)
+$(EXE):$(OBJS) $(CLK)
 	 $(LD) $(LDFLAGS) $^ -o $@
 
 connect:
