@@ -3,19 +3,21 @@
 #include "buttons.h"
 #include "matrix.h"
 #include "uart.h"
+#include "timer.h"
+#include "led.h"
 
 /* Définissez un objet global qui contiendra la trame affichée. Il sera modifé par le handler d'IRQ du port série, et lu par la tâche d'affichage */
 volatile rgb_color frames[64];
 
 int main(){
   clocks_init();
-  matrix_init();
   irq_init();
-  button_init();
+  led_init();
+  matrix_init();
   uart_init(38400);
-
-  while(1)
-    display_image((rgb_color *)frames);
+  timer_init((int)((SECOND/60) - 1)/8); // affichage de l'image courante au moins 60 fois par seconde, /8 parce que je fais ligne par ligne
+  
+  while(1);
 
   return 0;
 }

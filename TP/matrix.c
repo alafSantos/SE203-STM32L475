@@ -284,7 +284,15 @@ void test_pixels() {
     en cyclant sur les lignes suffisament vite pour que l'œil ait l'impression d'une image statique. 
 */
 void display_image(const rgb_color * image){ //image = &_binary_image_raw_start
-    for (int row = 0; row < 8; row++){
-        mat_set_row(row, &image[8*row]);
+    static int row;
+    static rgb_color pixels[8];
+
+    for (int pos = 0; pos < 8; pos++) {   
+        pixels[pos] = image[row*8 + pos];         // Attribution de la valeur de la LED rouge du pixel courant
     }
+
+    mat_set_row(row,pixels);
+    
+    if(row++ == 8)
+        row = 0;
 }

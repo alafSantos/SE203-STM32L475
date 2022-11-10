@@ -12,7 +12,7 @@ LDFLAGS = -T ld_ram.lds -nostdlib
 ASFLAGS = -g
 DUMPFLAGS = -d
 EXE  = main
-OBJS = main.o crt0.o init.o memfuncs.o led.o uart.o matrix.o image.o irq.o buttons.o
+OBJS = main.o crt0.o init.o memfuncs.o led.o uart.o matrix.o image.o irq.o buttons.o timer.o
 
 CMSISDIR1 = CMSIS/Device/ST/STM32L4xx/Include
 CMSISDIR2 = CMSIS/Include
