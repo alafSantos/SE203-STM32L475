@@ -112,6 +112,30 @@ MAKE_DEFAULT_HANDLER(DMA2D_IRQHandler)
 
 extern uint8_t _start, _stackStart;
 
+/*
+  On relogera la table des vecteurs d'interruption en RAM, 
+  de façon à donner à l'utilisateur la possibilité de mettre en place ses propres handlers d'IRQ.
+*/
+void __attribute__((section(".IRQFLASH"))) *vector_table_flash[] = {
+  &_stackStart,
+  &_start,  
+  // ARM internal exceptions
+  NMI_Handler,        /* NMI handler */
+  HardFault_Handler,  /* Hard Fault handler */
+  MemManage_Handler, /* Memory management */
+  BusFault_Handler, /* Pre-fetch fault, memory access fault */
+  UsageFault_Handler, /* Undefined instruction or illegal state */
+  0,                  /* Reserved */
+  0,                  /* Reserved */
+  0,                  /* Reserved */
+  0,                  /* Reserved */
+  SVC_Handler,        /* SVC handler */
+  0,                  /* Reserved */
+  0,                  /* Reserved */
+  PendSV_Handler,     /* Pending SVC handler */
+  SysTick_Handler    /* SysTick hanlder */
+};
+
 /* Interrupt and exception vectors - pages 396 - 399 (stm32l475xx_rm.pdf) */
 void __attribute__((section(".IRQ"))) *vector_table[] = {
   // Stack and Reset Handler
@@ -223,7 +247,7 @@ void __attribute__((section(".IRQ"))) *vector_table[] = {
   I2C4_EV_IRQHandler, /* I2C4 event interrupt */
   I2C4_ER_IRQHandler, /* I2C4 error interrupt */
   DCMI_IRQHandler, /* DCMI global interrupt */
-  CAN2_TX_IRQHandler, /* CAN2 TX interrupt */
+  CAN2_TX_IRQHandler, /* textAN2 TX interrupt */
   CAN2_RX0_IRQHandler, /* CAN2 RX0 interrupt */
   CAN2_RX1_IRQHandler, /* CAN2 RX1 interrupt */
   CAN2_SCE_IRQHandler, /* CAN SCE interrupt */
