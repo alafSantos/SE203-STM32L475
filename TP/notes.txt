@@ -29,3 +29,8 @@ tio /dev/serial/by-id/usb-SEGGER_J-Link_000770868477-if00
 
 ----------------------------------------
 pour la partie checksum "display/x sum" sur interface debug après avoir envoyé les octes.
+
+----------------------------------------
+od -t x1 image.raw
+arm-none-eabi-objdump -t main | grep image_raw
+hexdump image.raw 

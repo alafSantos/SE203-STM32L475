@@ -278,3 +278,15 @@ void test_pixels() {
         }
     }
 }
+
+/*
+    Faites en sorte que fonction main affiche automatiquement cette image, 
+    en cyclant sur les lignes suffisament vite pour que l'œil ait l'impression d'une image statique. 
+*/
+void display_image(const rgb_color * image){ //image = &_binary_image_raw_start
+    while(1){
+        for (int row = 0; row < 8; row++){
+            mat_set_row(row, &image[8*row]);
+        }
+    }
+}

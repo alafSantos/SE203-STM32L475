@@ -19,5 +19,6 @@ void send_byte(uint8_t val, int bank);
 void mat_set_row(int row, const rgb_color *val);
 void init_bank0();
 void test_pixels();
+void display_image();
 
 #endif
