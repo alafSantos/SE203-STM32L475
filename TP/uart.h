@@ -7,7 +7,7 @@
 
 #define SYSCLK 80000000
 
-void uart_init();
+void uart_init(int baudrate);
 void uart_putchar(uint8_t c);
 uint8_t uart_getchar();
 void uart_puts(const char *s);

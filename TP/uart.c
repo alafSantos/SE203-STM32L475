@@ -29,7 +29,7 @@ static void resetSerialPort(){
 }
 
 /* Configurer la vitesse du port série à 115200 bauds */
-static void setBaudRate(uint32_t baudrate){
+static void setBaudRate(int baudrate){
     USART1->BRR = SYSCLK/baudrate;    
 }
 
@@ -50,15 +50,21 @@ static void enableUSART1TxRx(){
     USART1->CR1 |= USART_CR1_UE | USART_CR1_TE | USART_CR1_RE; 
 }
 
-void uart_init(){ 
+static void enableINT(){
+    USART1->CR1 |= USART_CR1_RXNEIE; // RXNE Interrupt Enable 
+    NVIC_EnableIRQ(37);
+}
+
+void uart_init(int baudrate){ 
     clock_enable_PB();
     clock_enable_USART();
     alternateFunctionMode();
     resetSerialPort();
-    setBaudRate(115200);
+    setBaudRate(baudrate);
     oversampling16();
     mode8N1();
     enableUSART1TxRx(); 
+    enableINT();
 }
 
 /* qui attend que l'USART1 soit prêt à transmettre quelque chose, puis lui demande de l'envoyer */
@@ -125,4 +131,19 @@ uint32_t sum = 0;
 void checksum(){
     while(1)
         sum += uart_getchar();
+}
+
+extern volatile uint8_t frames[192];
+
+/* Écrivez la tâche de réception du port série (handler d'IRQ) qui traitera les octets reçus. */
+void USART1_IRQHandler(void){
+    static uint8_t pos;
+    uint8_t c = uart_getchar();
+    
+    if(c == 0xFF || pos >= 192){
+        pos = 0;
+        return;
+    }
+    
+    frames[pos++] = c;
 }

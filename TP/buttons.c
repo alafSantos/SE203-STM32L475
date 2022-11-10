@@ -1,6 +1,5 @@
 #include "buttons.h"
 #include "led.h"
-#include "uart.h"
 #include "irq.h"
 
 static void clock_enable(){

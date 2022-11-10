@@ -20,6 +20,8 @@ INCLUDEPATH = $(CMSISDIR1) $(CMSISDIR2)
 WARNINGS = -Wall -Werror -Wextra
 CFLAGS  = -c -g -O1 -ffreestanding $(WARNINGS) $(addprefix -I ,${INCLUDEPATH})
 
+SERIALCONF = sh ./stty.sh
+
 .PHONY: connect debug clean all # indique que la cible n'est pas un fichier, et qu'elle doit toujours être reconstruite
 
 all: $(EXE)
@@ -31,7 +33,7 @@ image.o : image.raw
 	$(OBJCOPY) -I binary -O elf32-littlearm -B arm image.raw image.o
 
 connect:
-	JLinkGDBServer -device STM32L475VG -endian little -if SWD -speed auto -ir -LocalhostOnly
+	$(SERIALCONF) && JLinkGDBServer -device STM32L475VG -endian little -if SWD -speed auto -ir -LocalhostOnly
 
 debug: $(EXE)
 	$(GDB) -x se203.gdb $(EXE)

@@ -2,22 +2,20 @@
 #include "irq.h"
 #include "buttons.h"
 #include "matrix.h"
+#include "uart.h"
 
-#define AVEC_IMAGE_STATIC //flag pour activer l'usage de l'image statique
-
-extern rgb_color _binary_image_raw_start;
+/* Définissez un objet global qui contiendra la trame affichée. Il sera modifé par le handler d'IRQ du port série, et lu par la tâche d'affichage */
+volatile rgb_color frames[64];
 
 int main(){
   clocks_init();
   matrix_init();
   irq_init();
   button_init();
+  uart_init(38400);
 
-  #ifdef AVEC_IMAGE_STATIC
-    display_image(&_binary_image_raw_start);
-  #endif
-
-  while(1);
+  while(1)
+    display_image((rgb_color *)frames);
 
   return 0;
 }
