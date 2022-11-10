@@ -1,0 +1,9 @@
+exercices/*/*.out
+exercices/*/*.o
+exercices/*/*.elf
+exercices/exercices_Makefile/hello
+exercices/exercices_compilation/ex3
+TP/*.out
+TP/*.o
+TP/*.elf
+TP/main
