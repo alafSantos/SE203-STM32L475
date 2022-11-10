@@ -1,13 +1,11 @@
-#include "led.h"
 #include "clocks.h"
-#include "uart.h"
+#include "matrix.h"
+
+extern rgb_color _binary_image_raw_start;
 
 int main(){
   clocks_init();
-  uart_init();
-  
-  // checksum();
-  uart_echo();
- 
+  matrix_init();
+  test_pixels();  
   return 0;
 }
