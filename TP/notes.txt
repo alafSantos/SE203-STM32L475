@@ -1,0 +1,4 @@
+Flash : adresse de début = 0x08000000, taille = 1 MB
+RAM : elle est séparée en deux blocs non contigus :
+    SRAM1 : début = 0x20000000, taille = 96 kB
+    SRAM2 : début = 0x10000000, taille = 32 kB
