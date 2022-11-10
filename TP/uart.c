@@ -137,13 +137,30 @@ extern volatile uint8_t frames[192];
 
 /* Écrivez la tâche de réception du port série (handler d'IRQ) qui traitera les octets reçus. */
 void USART1_IRQHandler(void){
-    static uint8_t pos;
-    uint8_t c = uart_getchar();
-    
-    if(c == 0xFF || pos >= 192){
-        pos = 0;
+    /* 
+        Faites en sorte que si votre UART reçoit une erreur de transmission (FE ou OR), 
+        alors la trame courante est ignorée et qu'on se remette en attente de la prochaine trame. 
+    */
+    static uint8_t erreur = 0;
+
+    if(erreur) return;
+
+    if (USART1->ISR & USART_ISR_ORE || USART1->ISR & USART_ISR_FE){ // Erreur d'overrun || Erreur de framing
+        USART1->RQR |= USART_RQR_RXFRQ_Msk; // The RXNE flag can also be cleared by writing 1 to the RXFRQ in the USART_RQR register
+        USART1->ICR |= USART_ICR_FECF_Msk;  // The FE bit is reset by writing 1 to the FECF in the USART_ICR register.
+        USART1->ICR |= USART_ICR_ORECF_Msk; // The ORE bit is reset by setting the ORECF bit in the ICR register.
+        erreur = 1;
         return;
     }
     
+    static uint8_t pos;
+    uint8_t c = uart_getchar();
+
+    if(c == 0xFF || pos >= 192){
+        pos = 0;
+        erreur = 0;
+        return;
+    }
+
     frames[pos++] = c;
 }
