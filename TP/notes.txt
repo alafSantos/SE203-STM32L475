@@ -1,4 +1,16 @@
+arm-none-eabi-gcc -march=armv7 -mfloat-abi=hard -mfpu=fpv4-sp-d16 --print-libgcc-file-name 
+
 Flash : adresse de début = 0x08000000, taille = 1 MB
 RAM : elle est séparée en deux blocs non contigus :
     SRAM1 : début = 0x20000000, taille = 96 kB
     SRAM2 : début = 0x10000000, taille = 32 kB
+
+git commit ...
+git tag TAG
+git push
+git push -- tag
+
+PUSH problème :
+    qu'est censé faire cette instruction ?
+    quel est l'état du processeur avant son exécution ?
+    ce qu'il faut pour corriger ? est-ce faisable dans votre programme en C ?

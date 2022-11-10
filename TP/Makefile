@@ -10,7 +10,7 @@ LDFLAGS = -T ld_ram.lds -nostdlib
 ASFLAGS = -g
 DUMPFLAGS = -d
 EXE  = main
-OBJS = main.o fibonacci.o crt0.o init.o memfuncs.o
+OBJS = main.o crt0.o init.o memfuncs.o led.o
 
 .PHONY: connect debug clean all
 
